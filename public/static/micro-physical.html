@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微体检页面</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.png'); /* 替换为你的背景图片路径 */
+            background-size: cover; /* 覆盖整个背景 */
+            background-attachment: fixed; /* 背景图片固定，不随滚动条滚动 */
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* 添加文字描边 */
+        }
+        .top-bar {
+            background-color: rgba(173, 216, 230, 0.8); /* 调整透明度以适应背景图片 */
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            padding-left: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            position: relative; /* 添加相对定位 */
+        }
+        .logo img {
+            height: 50px; /* 可以根据实际图片大小调整 */
+            border-radius: 50%; /* 圆形头像 */
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8); /* 调整透明度以适应背景图片 */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px; /* 添加圆角 */
+            overflow: hidden; /* 确保圆角效果 */
+            margin-top: 10px; /* 与头像保持一定距离 */
+            right: 20px; /* 靠右显示 */
+            min-width: 120px; /* 确保有足够的宽度 */
+        }
+        .dropdown a {
+            color: #fff; /* 修改为白色以提高对比度 */
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            white-space: nowrap; /* 确保链接文字在一行显示 */
+            background-color: rgba(173, 216, 230, 0.8); /* 调整透明度以适应背景图片 */
+        }
+        .dropdown a:hover {
+            background-color: #f1f1f1;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+        .nav-links a {
+            color: #fff; /* 修改为白色以提高对比度 */
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-size: 16px; /* 设置统一的字体大小 */
+        }
+        .nav-links a:hover {
+            background-color: #ddd;
+            color: #000;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin: 40px auto;
+            flex-wrap: wrap;
+        }
+        .button {
+            flex: 1;
+            min-width: calc(33.333% - 20px); /* 每个按钮占据1/3屏幕宽度减去间距 */
+            margin: 10px;
+            padding: 15px 30px;
+            background-color: rgba(173, 216, 230, 0.8); /* 调整透明度以适应背景图片 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .button img {
+            width: 50px; /* 统一图片宽度 */
+            height: 50px; /* 统一图片高度 */
+            border-radius: 50%; /* 图片圆形样式 */
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* 图片阴影 */
+        }
+        .button:hover {
+            background-color: rgba(128, 177, 211, 0.8); /* 鼠标悬浮时的背景颜色 */
+        }
+        .footer {
+            background-color: rgba(173, 216, 230, 0.8); /* 调整透明度以适应背景图片 */
+            color: #333;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* 添加文字描边 */
+        }
+        /* 媒体查询，当屏幕宽度小于768px时，隐藏底栏 */
+        @media (max-width: 768px) {
+            .footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="logo" onclick="toggleDropdown()">
+        <img src="th.jpg" alt="用户头像">
+        <div class="dropdown" id="dropdownMenu">
+            <a href="personal-center.html">个人中心</a>
+            <a href="account-management.html">账号管理</a>
+        </div>
+    </div>
+    <div class="nav-links">
+        <a href="index.html" style="font-size: 16px; color: #fff;">主页</a> <!-- 调整样式 -->
+    </div>
+</div>
+
+<div class="container">
+    <button class="button">
+        <img src="2.jpg" alt="微体检图标">
+        微体检
+    </button>
+    <button class="button">
+        <img src="3.jpg" alt="体检记录图标">
+        体检记录
+    </button>
+    <button class="button">
+        <img src="1.jpg" alt="专家咨询图标">
+        专家咨询
+    </button>
+</div>
+
+<div class="footer">
+    <p>版权所有 &copy; 2024 </p>
+</div>
+
+<script>
+function toggleDropdown() {
+    var dropdown = document.getElementById("dropdownMenu");
+    var logo = document.querySelector('.logo');
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+        // 设置下拉菜单的位置
+        var leftPosition = logo.offsetLeft + logo.offsetWidth - dropdown.offsetWidth + 'px'; // 调整为右对齐
+        dropdown.style.left = leftPosition;
+        dropdown.style.top = (logo.offsetTop + logo.offsetHeight + 5) + 'px'; // 与头像保持一定距离
+    }
+}
+
+// 点击其他地方关闭下拉菜单
+document.addEventListener('click', function(e) {
+    var dropdown = document.getElementById("dropdownMenu");
+    if (e.target !== dropdown && !dropdown.contains(e.target) && !document.querySelector('.logo').contains(e.target)) {
+        dropdown.style.display = "none";
+    }
+});
+</script>
+
+</body>
+</html>

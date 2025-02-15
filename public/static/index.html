@@ -1,16 +1,7 @@
-<?php 
-require 'config.php';
-redirectIfNotLoggedIn();
-
-// 获取用户数据
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch();
-?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>首页</title>
     <style>
@@ -101,27 +92,21 @@ $user = $stmt->fetch();
             }
         }
     </style>
-    <title>首页</title>
 </head>
 <body>
-    <div class="top-bar">
-        <div class="logo">
-            <img src="logo.jpg" alt="网站图标">
-        </div>
-        <div class="nav-links">
-            <?php if (isLoggedIn()): ?>
-                <span style="color:white;">欢迎，<?= htmlspecialchars($_SESSION['full_name']) ?></span>
-                <a href="logout.php">退出登录</a>
-                <a href="personal-center.php">个人中心</a>
-            <?php else: ?>
-                <a href="login.php">登录</a>
-                <a href="register.php">注册</a>
-            <?php endif; ?>
-            <a href="micro-physical.html">微体检</a>
-        </div>
-    </div>
 
-    <div class="container">
+<div class="top-bar">
+    <div class="logo">
+        <img src="logo.jpg" alt="网站图标"> <!-- 替换为你的图标图片路径 -->
+    </div>
+    <div class="nav-links">
+        <a href="about.html">关于我们</a>
+        <a href="personal-center.html">个人中心</a>
+        <a href="micro-physical.html">微体检</a>
+    </div>
+</div>
+
+<div class="container">
     <div class="image-display">
         <h2>风采展示</h2>
         <img src="wq.jpg" alt="示例图片"> <!-- 替换为你的图片路径 -->
@@ -140,19 +125,21 @@ $user = $stmt->fetch();
         </div>
         <!-- 根据需要添加更多的新闻项 -->
     </div>
-        <div class="personal-data">
-            <div class="profile">
-                <img src="th.jpg" alt="用户头像">
-                <h2><?= htmlspecialchars($user['full_name']) ?></h2>
-                <p>距上次体检已 <?= $user['last_checkup'] ? floor((time() - strtotime($user['last_checkup'])) / 86400) : 'N/A' ?> 天</p>
-                <p>当前账号状态：正常</p>
-            </div>
+    <div class="personal-data">
+        <div class="profile">
+            <img src="th.jpg" alt="用户头像"> <!-- 替换为你的头像图片路径 -->
+            <h2>张三</h2>
+            <p>距上次体检已13天</p>
+            <p>当前账号状态：正常</p>
         </div>
     </div>
-
-    <div class="footer">
-    <p>版权所有 &copy; 2024 </p>
-
 </div>
+
+<div class="footer">
+    <p>版权所有 &copy; 2024 </p>
+    <p>网安备案号：XXXXXXXXXXXXX</p>
+    <p>ICP备案号：XXXXXXXXXXXXX</p>
+</div>
+
 </body>
 </html>
