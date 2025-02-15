@@ -1,158 +1,24 @@
-<?php 
-require 'config.php';
-redirectIfNotLoggedIn();
+<?php
+// +----------------------------------------------------------------------
+// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2006-2019 http://thinkphp.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: liu21st <liu21st@gmail.com>
+// +----------------------------------------------------------------------
 
-// 获取用户数据
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch();
-?>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>首页</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('background.png'); /* 替换为你的背景图片路径 */
-            background-size: cover; /* 覆盖整个背景 */
-            background-attachment: fixed; /* 背景图片固定，不随滚动条滚动 */
-            color: #333;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* 添加文字描边 */
-        }
-        .top-bar {
-            background-color: rgba(173, 216, 230, 0.8); /* 调整透明度以适应背景图片 */
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            padding-left: 20px;
-        }
-        .logo img {
-            height: 50px; /* 可以根据实际图片大小调整 */
-        }
-        .nav-links {
-            display: flex;
-            justify-content: flex-end;
-            padding-right: 20px;
-        }
-        .nav-links a {
-            color: #fff; /* 修改为白色以提高对比度 */
-            padding: 14px 20px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* 添加文字描边 */
-        }
-        .nav-links a:hover {
-            background-color: #ddd;
-            color: #000;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8); /* 调整透明度以适应背景图片 */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-top: 20px;
-        }
-        .image-display, .info-flow, .personal-data {
-            flex: 1;
-            min-width: 300px; /* 确保在小屏幕上也能良好展示 */
-            padding: 20px;
-            margin-right: 10px;
-            background-color: rgba(255, 255, 255, 0.8); /* 调整透明度以适应背景图片 */
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .personal-data {
-            background-color: rgba(242, 242, 242, 0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-        .personal-data:hover {
-            background-color: #ddd;
-        }
-        .footer {
-            background-color: rgba(173, 216, 230, 0.8);
-            color: #333;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            font-size: 14px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* 添加文字描边 */
-            transition: opacity 0.3s ease;
-        }
-        /* 媒体查询，当屏幕宽度小于768px时，隐藏底栏 */
-        @media (max-width: 768px) {
-            .footer {
-                display: none;
-            }
-        }
-    </style>
-    <title>首页</title>
-</head>
-<body>
-    <div class="top-bar">
-        <div class="logo">
-            <img src="logo.jpg" alt="网站图标">
-        </div>
-        <div class="nav-links">
-            <?php if (isLoggedIn()): ?>
-                <span style="color:white;">欢迎，<?= htmlspecialchars($_SESSION['full_name']) ?></span>
-                <a href="logout.php">退出登录</a>
-                <a href="personal-center.php">个人中心</a>
-            <?php else: ?>
-                <a href="login.php">登录</a>
-                <a href="register.php">注册</a>
-            <?php endif; ?>
-            <a href="micro-physical.html">微体检</a>
-        </div>
-    </div>
+// [ 应用入口文件 ]
+namespace think;
 
-    <div class="container">
-    <div class="image-display">
-        <h2>风采展示</h2>
-        <img src="wq.jpg" alt="示例图片"> <!-- 替换为你的图片路径 -->
-        <p>我团队正在进行数据搜集</p>
-    </div>
-    <div class="info-flow">
-        <h2>团队新闻</h2>
-        <!-- 信息流条目 -->
-        <div class="news-item">
-            <h3>我团队已完成基础内容的开发</h3>
-            <p>截至到12月1日，我团队已完成大部系统开发....</p>
-        </div>
-        <div class="news-item">
-            <h3>团队组建完成，活动已开展</h3>
-            <p>11月15日，团队正式建立，本团队立足于....</p>
-        </div>
-        <!-- 根据需要添加更多的新闻项 -->
-    </div>
-        <div class="personal-data">
-            <div class="profile">
-                <img src="th.jpg" alt="用户头像">
-                <h2><?= htmlspecialchars($user['full_name']) ?></h2>
-                <p>距上次体检已 <?= $user['last_checkup'] ? floor((time() - strtotime($user['last_checkup'])) / 86400) : 'N/A' ?> 天</p>
-                <p>当前账号状态：正常</p>
-            </div>
-        </div>
-    </div>
+require __DIR__ . '/../vendor/autoload.php';
 
-    <div class="footer">
-    <p>版权所有 &copy; 2024 </p>
+// 执行HTTP应用并响应
+$http = (new App())->http;
 
-</div>
-</body>
-</html>
+$response = $http->run();
+
+$response->send();
+
+$http->end($response);
